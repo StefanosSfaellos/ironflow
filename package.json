@@ -1,0 +1,138 @@
+{
+  "name": "ironflow",
+  "displayName": "IronFlow",
+  "description": "Automatically track coding time and sync with web application",
+  "version": "1.0.0",
+  "publisher": "stsfaellos",
+  "author": {
+    "name": "IronCloud"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ironflow"
+  },
+  "license": "MIT",
+  "keywords": [
+    "time-tracking",
+    "productivity",
+    "project-management"
+  ],
+  "icon": "resources/time.png",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "time-tracker",
+          "title": "IronFlow",
+          "icon": "resources/time.svg"
+        }
+      ]
+    },
+    "views": {
+      "time-tracker": [
+        {
+          "id": "timeTrackerView",
+          "name": "IronFlow"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "ironflow.toggle",
+        "title": "IronFlow: Toggle Tracking",
+        "icon": {
+          "light": "resources/light/time.svg",
+          "dark": "resources/dark/time.svg"
+        }
+      },
+      {
+        "command": "ironflow.setProject",
+        "title": "IronFlow: Set Project ID"
+      },
+      {
+        "command": "ironflow.setApiUrl",
+        "title": "IronFlow: Set API URL"
+      },
+      {
+        "command": "ironflow.setAuthToken",
+        "title": "IronFlow: Set Auth Token"
+      },
+      {
+        "command": "ironflow.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "configuration": {
+      "title": "Project IronFlow",
+      "properties": {
+        "ironflow.projectId": {
+          "type": "string",
+          "default": "",
+          "description": "Project ID from the web application"
+        },
+        "ironflow.apiUrl": {
+          "type": "string",
+          "default": "",
+          "description": "API URL for the time tracking server"
+        },
+        "ironflow.idleTimeout": {
+          "type": "number",
+          "default": 300000,
+          "description": "Idle timeout in milliseconds (default: 5 minutes)"
+        },
+        "ironflow.authToken": {
+          "type": "string",
+          "default": "",
+          "description": "Authentication token for the time tracking server"
+        }
+      }
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "ironflow.toggle",
+          "when": "view == timeTrackerView",
+          "group": "navigation"
+        },
+        {
+          "command": "ironflow.refresh",
+          "when": "view == timeTrackerView",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^14.x",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.3",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
